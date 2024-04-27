@@ -96,4 +96,31 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 {
 //add your solution here!
 
+  // out of bounce return false 
+  if (r >= board.size() || c >= board.size())
+        return false;
+
+    // add char to word
+    word += board[r][c];
+    bool pre = (prefix.find(word) != prefix.end()); // is a prefix
+    bool isWord = (dict.find(word) != dict.end()); // is a word
+
+    // Recursively search along the direction
+    if(pre){
+      if (!boggleHelper(dict, prefix, board, word, result, r + dr, c + dc, dr, dc)){
+        if(isWord){
+          result.insert(word);
+          return true;
+        }
+        return false;
+      }
+      return true;
+    }
+    else {
+      if(isWord){
+        result.insert(word);
+        return true;
+      }
+    }
+    return false;
 }
